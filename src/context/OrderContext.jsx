@@ -7,9 +7,9 @@ const initialState = {
   loading: true,
 };
 
-export const OrderContext = createContext();
+const OrderContext = createContext();
 
-export const OrderProvider = ({ children }) => {
+const OrderProvider = ({ children }) => {
   const [state, dispatch] = useReducer(OrderReducer, initialState);
 
   useEffect(() => {
@@ -31,7 +31,6 @@ export const OrderProvider = ({ children }) => {
               (order) =>
                 order &&
                 order.orderId &&
-                typeof order.customerName === "string" &&
                 typeof order.restaurant === "string"
             )
           : [];
@@ -61,4 +60,5 @@ export const OrderProvider = ({ children }) => {
   );
 };
 
-export const useOrder = () => useContext(OrderContext);
+  export default OrderProvider;
+  export const useOrder = () => useContext(OrderContext);

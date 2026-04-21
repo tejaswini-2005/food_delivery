@@ -6,7 +6,7 @@ const OrderCard = ({ order }) => {
       <h3>Order ID: {order.orderId || "N/A"}</h3>
 
       <p>
-        <strong>Customer:</strong> {order.customerName || "Unknown"}
+        <strong>Customer:</strong> {order.customerName || "Unkown"}
       </p>
 
       <p>
@@ -28,9 +28,11 @@ const OrderCard = ({ order }) => {
         <strong>Delivery Time:</strong> {order.deliveryTime || "N/A"}
       </p>
 
-      <p>
-        <strong>Rating:</strong> {order.rating ?? "No Rating"}
-      </p>
+      {Number.isFinite(order.rating) && (
+        <p>
+          <strong>Rating:</strong> {order.rating}
+        </p>
+      )}
 
       <div>
         <strong>Items:</strong>
