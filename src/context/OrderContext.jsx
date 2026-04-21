@@ -12,6 +12,20 @@ const OrderContext = createContext();
 const OrderProvider = ({ children }) => {
   const [state, dispatch] = useReducer(OrderReducer, initialState);
 
+  const markOrderDelivered = (orderId) => {
+    dispatch({
+      type: "MARK_ORDER_DELIVERED",
+      payload: orderId,
+    });
+  };
+
+  const undoOrderDelivered = (orderId) => {
+    dispatch({
+      type: "UNDO_ORDER_DELIVERED",
+      payload: orderId,
+    });
+  };
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -53,6 +67,8 @@ const OrderProvider = ({ children }) => {
       value={{
         orders: state.orders,
         loading: state.loading,
+        markOrderDelivered,
+        undoOrderDelivered,
       }}
     >
       {children}
@@ -60,5 +76,5 @@ const OrderProvider = ({ children }) => {
   );
 };
 
-  export default OrderProvider;
-  export const useOrder = () => useContext(OrderContext);
+export default OrderProvider;
+export const useOrder = () => useContext(OrderContext);

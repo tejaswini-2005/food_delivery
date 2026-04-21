@@ -1,5 +1,8 @@
-const OrderCard = ({ order }) => {
+const OrderCard = ({ order, onMarkDelivered, onUndoDelivered }) => {
   const items = Array.isArray(order.items) ? order.items : [];
+  const isDelivered =
+    typeof order?.status === "string" &&
+    order.status.toLowerCase() === "delivered";
 
   return (
     <div className="order-card" data-testid="order-item">
@@ -49,6 +52,24 @@ const OrderCard = ({ order }) => {
           </ul>
         )}
       </div>
+
+      {typeof onMarkDelivered === "function" && !isDelivered && (
+        <button
+          type="button"
+          onClick={() => onMarkDelivered(order?.orderId)}
+        >
+          Mark as Delivered
+        </button>
+      )}
+
+      {typeof onUndoDelivered === "function" && isDelivered && (
+        <button
+          type="button"
+          onClick={() => onUndoDelivered(order?.orderId)}
+        >
+          Undo Delivered
+        </button>
+      )}
     </div>
   );
 };
